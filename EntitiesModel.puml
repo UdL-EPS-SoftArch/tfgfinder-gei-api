@@ -1,15 +1,74 @@
 @startuml
 
-class User extends UriEntity implements UserDetails {
+class User {
   username : String
   password : String
   email : String
+  favorites: Proposal[]
 }
 
-class UriEntity {
-  uri : String
+together {
+
+class Invite {
+  when: ZonedDateTime
+  status : String
+}
+Invite -[hidden]down- Interest
+Invite "*" --> "1" Proposal : what
+Invite "*" --> "1" User : who
+
+class Interest {
+  when: ZonedDateTime
+  status : String
+}
+Interest -[hidden]down- Agree
+Interest "*" --> "1" Proposal : what
+Interest "*" --> "1" User : who
+
+class Agree {
+  when: ZonedDateTime
+  status : String
+}
+Agree "*" -right-> "1" Proposal : what
+Agree "*" -left-> "1" User : who
 }
 
-User "1" --right-- "*" Resource : owner <
+class Proposal {
+  title : String
+  description : String
+  timing: String
+  speciality: String
+  kind: String
+  keywords : String[]
+  owner: User
+}
+
+class Admin extends User {}
+class Student extends User {}
+class Director extends User {}
+class Professor  extends Director {}
+class External extends Director {}
+
+Proposal "*" ---> "0..2" Director : directedBy
+Proposal "*" ---> "0..1" Student : student
+Proposal "*" ----> "0..2" Professor : directedBy
+Proposal "*" ----> "0..1" External : directedBy
+
+Proposal "1" --up-> "1" Chat
+
+Chat "1" <-right- "*" Message : partOf
+
+class Message {
+  text : String
+  when: ZonedDateTime
+  from: User
+}
+
+Proposal "*" -right-> "*" Category : categorizedBy
+
+class Category {
+  name : String
+  description : String
+}
 
 @enduml
