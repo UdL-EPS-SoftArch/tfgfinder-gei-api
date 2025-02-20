@@ -1,6 +1,7 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,6 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Director extends User{
+
+    @NotNull
     private int numFinishedProposals;
-    private int numACtiveProposals;
+    @NotNull
+    private int numActiveProposals;
 }
