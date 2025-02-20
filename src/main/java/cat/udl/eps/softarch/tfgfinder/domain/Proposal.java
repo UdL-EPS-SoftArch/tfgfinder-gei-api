@@ -35,11 +35,12 @@ public class Proposal extends UriEntity<Long> {
     private String kind;
 
     @NotBlank
-    @ElementCollection
-    private List<String> keywords;
+    private String keywords;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
+
 
 }
