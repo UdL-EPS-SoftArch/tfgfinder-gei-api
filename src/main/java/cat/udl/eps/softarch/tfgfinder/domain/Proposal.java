@@ -1,15 +1,11 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
 @Entity
-@Table(name = "Proposal")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Proposal extends UriEntity<Long> {
@@ -38,7 +34,6 @@ public class Proposal extends UriEntity<Long> {
     private String keywords;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
 
