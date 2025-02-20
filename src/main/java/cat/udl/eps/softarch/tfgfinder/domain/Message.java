@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "Message") // Especifica que tindrà una taula pròpia
+@Table(name = "Message")
 @Data
 public class Message {
 
