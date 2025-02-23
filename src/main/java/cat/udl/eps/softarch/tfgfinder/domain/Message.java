@@ -9,12 +9,11 @@ import lombok.Data;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "Message")
 @Data
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @NotBlank

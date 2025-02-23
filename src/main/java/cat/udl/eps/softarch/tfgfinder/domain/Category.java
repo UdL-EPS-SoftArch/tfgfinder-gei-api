@@ -1,13 +1,11 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "Category")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Category extends UriEntity<Long> {
@@ -22,4 +20,4 @@ public class Category extends UriEntity<Long> {
     @Lob
     private String description;
 
-}   
+}
