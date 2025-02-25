@@ -7,5 +7,9 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import java.util.Collection;
 
 public class Professor extends Director {
-
+    @Override
+    @ElementCollection
+    public Collection<GrantedAuthority> getAuthorities(){
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_PROFESSOR");
+    }
 }
