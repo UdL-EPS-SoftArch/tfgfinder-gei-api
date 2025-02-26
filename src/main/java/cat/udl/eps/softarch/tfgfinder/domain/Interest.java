@@ -27,6 +27,6 @@ public class Interest extends UriEntity<Long> {
     @ManyToOne
     private User who;
 
-    //@ManyToOne
-   //private Proposal what;
+    @ManyToOne
+   private Proposal what;
 }
