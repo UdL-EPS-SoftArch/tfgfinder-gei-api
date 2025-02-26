@@ -4,16 +4,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-
 import java.time.ZonedDateTime;
 
-@Entity
 
+@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Interest extends UriEntity<Long> {
 
+public class Invite extends UriEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,5 +26,5 @@ public class Interest extends UriEntity<Long> {
     private User who;
 
     @ManyToOne
-   private Proposal what;
+    private Proposal what;
 }
