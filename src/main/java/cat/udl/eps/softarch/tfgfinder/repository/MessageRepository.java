@@ -8,6 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface MessageRepository extends CrudRepository<Invite, Long>, PagingAndSortingRepository<Invite, Long> {
+public interface MessageRepository extends CrudRepository<Message, Long>, PagingAndSortingRepository<Message, Long> {
     List<Message> findByChat(Chat chat);
 }
