@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -35,7 +38,37 @@ public class Proposal extends UriEntity<Long> {
 
     @ManyToOne(optional = false)
     private User owner;
+    @ManyToMany
+    @JoinTable(
+            name = "proposal_category",  // Name of the join table
+            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
+            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK to Category
+    )
+    private Set<Category> categories = new HashSet<>();
 
+    @OneToOne
+    private Chat chat;
 
+    @ManyToOne(optional = true)
+    private Student student;
 
+    @ManyToMany
+    @JoinTable(
+            name = "proposal_director",  // Name of the join table
+            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
+            inverseJoinColumns = @JoinColumn(name = "director_id")  // FK to Director
+    )
+    private Set<Director> directors = new HashSet<>(2);
+
+    @ManyToOne()
+    private External external;
+
+    @ManyToOne()
+    private Set<Professor> professors = new HashSet<>(2);
 }
+
+
+
+
+
+
