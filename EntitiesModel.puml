@@ -49,10 +49,10 @@ class Director extends User {}
 class Professor  extends Director {}
 class External extends Director {}
 
-Proposal "*" ---> "0..2" Director : directedBy
+Proposal "*" ---> "0..1" Director : codirectedBy
 Proposal "*" ---> "0..1" Student : student
-Proposal "*" ----> "0..2" Professor : directedBy
-Proposal "*" ----> "0..1" External : directedBy
+Proposal "*" ----> "0..1" Professor : directedBy
+Proposal -[hidden]-> External
 
 Proposal "1" --up-> "1" Chat
 
