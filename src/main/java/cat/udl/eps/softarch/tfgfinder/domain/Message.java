@@ -28,5 +28,3 @@ public class Message {
     @ManyToOne
     private Chat chat;
 }
-
-
