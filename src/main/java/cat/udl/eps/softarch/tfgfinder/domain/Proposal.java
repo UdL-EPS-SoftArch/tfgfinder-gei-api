@@ -53,13 +53,11 @@ public class Proposal extends UriEntity<Long> {
     private Student student;
 
     @ManyToOne(optional = true)
-    private Director director;
+    private Director codirector;
 
     @ManyToOne(optional = true)
-    private Professor professor;
+    private Professor director;
 
-    @ManyToOne()
-    private External external;
 
 }
 

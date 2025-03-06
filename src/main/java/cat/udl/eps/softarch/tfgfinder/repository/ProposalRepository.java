@@ -22,7 +22,7 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
   List<Proposal> findByCategories(Category category); // Fixed: categories is a Set<Category>
   List<Proposal> findByTitleContaining(String text);
   List<Proposal> findByStudent(Student student);
-  List<Proposal> findByExternal(External external);
-  List<Proposal> findByProfessor(Professor professor);
-  List<Proposal> findByDirector(Director director);
+
+  List<Proposal> findByDirector(Professor Director);
+  List<Proposal> findByCodirector(Director Codirector);
 }
