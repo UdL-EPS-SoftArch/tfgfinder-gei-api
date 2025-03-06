@@ -1,31 +1,28 @@
 package cat.udl.eps.softarch.tfgfinder.repository;
 
 import cat.udl.eps.softarch.tfgfinder.domain.*;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
 @RepositoryRestResource
-public interface ProposalRepository extends CrudRepository<Proposal, Long>, PagingAndSortingRepository<Proposal, Long> {
-  //Atributes
-  List<Proposal> findByDescriptionContaining(@Param("text") String text);
-  Proposal findProposalById(@Param("text")String text);
+public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long> {
+
+  // Attributes
+  List<Proposal> findByDescriptionContaining(String text);
+  Proposal findProposalById(Long id);  // Fixed parameter type
   Proposal findByChat(Chat chat);
-  List<Proposal> findByKind(@Param("text") String kind);
-  List<Proposal> findBySpeciality(@Param("text") String text);
+  List<Proposal> findByKind(String kind);
+  List<Proposal> findBySpeciality(String text);
   List<Proposal> findByOwner(User user);
 
-
-  //Relations
-  List<Proposal> findByKeywords(@Param("text") String text);
-  List<Proposal> findByCategory(Category category);
-  List<Proposal> findByTitleContaining(@Param("text") String text);
+  // Relations
+  List<Proposal> findByKeywords(String text);
+  List<Proposal> findByCategories(Category category); // Fixed: categories is a Set<Category>
+  List<Proposal> findByTitleContaining(String text);
   List<Proposal> findByStudent(Student student);
   List<Proposal> findByExternal(External external);
   List<Proposal> findByProfessors(Professor professor);
   List<Proposal> findByDirectors(Director director);
-
 }
