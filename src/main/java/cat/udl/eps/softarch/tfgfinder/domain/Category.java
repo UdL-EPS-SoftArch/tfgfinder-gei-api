@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,5 +22,6 @@ public class Category extends UriEntity<Long> {
 
     @Lob
     private String description;
+
 
 }

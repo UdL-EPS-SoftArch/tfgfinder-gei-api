@@ -25,7 +25,7 @@ public interface ProposalRepository extends CrudRepository<Proposal, Long>, Pagi
   List<Proposal> findByTitleContaining(@Param("text") String text);
   List<Proposal> findByStudent(Student student);
   List<Proposal> findByExternal(External external);
-  List<Proposal> findByProfessor(Professor professor);
+  List<Proposal> findByProfessors(Professor professor);
   List<Proposal> findByDirectors(Director director);
 
 }
