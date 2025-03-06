@@ -52,24 +52,15 @@ public class Proposal extends UriEntity<Long> {
     @ManyToOne(optional = true)
     private Student student;
 
-    @ManyToMany
-    @JoinTable(
-            name = "proposal_director",  // Name of the join table
-            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
-            inverseJoinColumns = @JoinColumn(name = "director_id")  // FK to Director
-    )
-    private Set<Director> directors = new HashSet<>(2);
+    @ManyToOne(optional = true)
+    private Director director;
+
+    @ManyToOne(optional = true)
+    private Professor professor;
 
     @ManyToOne()
     private External external;
 
-    @ManyToMany
-    @JoinTable(
-            name = "proposal_professor",  // Name of the join table
-            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
-            inverseJoinColumns = @JoinColumn(name = "professor_id")  // FK to Director
-    )
-    private Set<Professor> professors = new HashSet<>(2);
 }
 
 

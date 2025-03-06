@@ -23,6 +23,6 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
   List<Proposal> findByTitleContaining(String text);
   List<Proposal> findByStudent(Student student);
   List<Proposal> findByExternal(External external);
-  List<Proposal> findByProfessors(Professor professor);
-  List<Proposal> findByDirectors(Director director);
+  List<Proposal> findByProfessor(Professor professor);
+  List<Proposal> findByDirector(Director director);
 }
