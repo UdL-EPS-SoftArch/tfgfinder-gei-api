@@ -1,0 +1,15 @@
+Feature: Delete Interest
+  As a user
+  I want to remove an interest
+  So that I can withdraw from a proposal
+
+  Scenario: Successfully delete an interest
+    Given There is an existing interest with id "1"
+    When I delete the interest with id "1"
+    Then The response code is 204
+    And The interest no longer exists
+
+  Scenario: Delete an interest that does not exist
+    When I delete the interest with id "999"
+    Then The response code is 404
+    And The error message is "Interest not found"

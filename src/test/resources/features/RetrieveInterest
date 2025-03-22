@@ -1,0 +1,23 @@
+Feature: Retrieve Interests
+  As a user
+  I want to view all interests
+  So that I can track my interests and proposals
+
+  Scenario: Retrieve all interests for a user
+    Given There is an existing user with username "john_doe"
+    And The user has 2 interests with statuses "Pending" and "Approved"
+    When I retrieve all interests for the user "john_doe"
+    Then The response code is 200
+    And The response contains 2 interests
+
+  Scenario: Retrieve all interests for a proposal
+    Given There is an existing proposal with title "AI Research"
+    And The proposal has 3 interests with statuses "Pending", "Approved", and "Rejected"
+    When I retrieve all interests for the proposal "AI Research"
+    Then The response code is 200
+    And The response contains 3 interests
+
+  Scenario: Retrieve interests for a non-existing user
+    When I retrieve all interests for the user "non_existent_user"
+    Then The response code is 404
+    And The error message is "User not found"
