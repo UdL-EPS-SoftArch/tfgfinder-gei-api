@@ -1,0 +1,25 @@
+Feature: Create Interest
+  As a user
+  I want to create an interest in a proposal
+  So that I can express my willingness to participate
+
+  Scenario: Successfully create a new interest
+    Given There is an existing user with username "john_doe"
+    And There is an existing proposal with title "AI Research"
+    When I create a new interest with status "Pending" and timestamp "2025-03-19T10:15:30Z" for user "john_doe" and proposal "AI Research"
+    Then The response code is 201
+    And The interest has been created with status "Pending"
+
+  Scenario: Create interest for a non-existing user
+    Given There is an existing proposal with title "AI Research"
+    When I create a new interest with status "Pending" and timestamp "2025-03-19T10:15:30Z" for user "non_existent_user" and proposal "AI Research"
+    Then The response code is 400
+    And The error message is "User not found"
+
+  Scenario: Create duplicate interest for the same user and proposal
+    Given There is an existing user with username "john_doe"
+    And There is an existing proposal with title "AI Research"
+    And The user already has an interest in the proposal with status "Pending"
+    When I create a new interest with status "Pending" and timestamp "2025-03-19T10:15:30Z" for user "john_doe" and proposal "AI Research"
+    Then The response code is 400
+    And The error message is "Interest already exists"

@@ -1,0 +1,21 @@
+Feature: Update Interest Status
+  As a user
+  I want to update my interest status
+  So that I can reflect my current decision
+
+  Scenario: Successfully update an interest status
+    Given There is an existing interest with id "1" and status "Pending"
+    When I update the interest with id "1" to status "Approved"
+    Then The response code is 200
+    And The interest has been updated with status "Approved"
+
+  Scenario: Update an interest that does not exist
+    When I update the interest with id "999" to status "Approved"
+    Then The response code is 404
+    And The error message is "Interest not found"
+
+  Scenario: Update an interest with an invalid status
+    Given There is an existing interest with id "1" and status "Pending"
+    When I update the interest with id "1" to status ""
+    Then The response code is 400
+    And The error message is "Status must not be empty"
