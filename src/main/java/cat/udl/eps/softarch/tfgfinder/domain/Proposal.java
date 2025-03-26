@@ -38,12 +38,8 @@ public class Proposal extends UriEntity<Long> {
 
     @ManyToOne(optional = false)
     private User owner;
+
     @ManyToMany
-    @JoinTable(
-            name = "proposal_category",  // Name of the join table
-            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
-            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK to Category
-    )
     private Set<Category> categories = new HashSet<>();
 
     @OneToOne

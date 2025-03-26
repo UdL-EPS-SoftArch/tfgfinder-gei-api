@@ -17,13 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional  // Ensures test isolation
-public class ProposalSteps {
+public class ProposalStepsDefs {
 
     @Autowired
     private ProposalRepository proposalRepository;
@@ -140,7 +139,7 @@ public class ProposalSteps {
     @Given("a student with name {string}")
     public void a_student_with_name(String studentName) {
         student = new Student();
-        student.setName(studentName);
+        student.setUsername(studentName);
         student = studentRepository.save(student);
     }
 
@@ -161,14 +160,14 @@ public class ProposalSteps {
     @Given("a professor with name {string}")
     public void a_professor_with_name(String professorName) {
         director = new Professor();
-        director.setName(professorName);
+        director.setUsername(professorName);
         director = professorRepository.save(director);
     }
 
     @Given("a co-director with name {string}")
     public void a_co_director_with_name(String codirectorName) {
         codirector = new Director();
-        codirector.setName(codirectorName);
+        codirector.setUsername(codirectorName);
         codirector = directorRepository.save(codirector);
     }
 
