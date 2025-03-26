@@ -19,12 +19,5 @@ public interface CategoryRepository extends CrudRepository<Category, Long>, Pagi
 
   List<Category> findByDescriptionContaining(@Param("keyword") String keyword);
 
-  List<Category> findByDescriptionIsNotNull();
-
-
-  List<Category> findByIdGreaterThan(@Param("id") Long id);
-  List<Category> findByIdLessThan(@Param("id") Long id);
-
-
   long countByNameContaining(@Param("text") String text);
 }
