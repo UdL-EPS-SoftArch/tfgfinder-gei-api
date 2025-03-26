@@ -9,7 +9,22 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 @RepositoryRestResource
-public interface CategoryRepository extends CrudRepository<Category, String>, PagingAndSortingRepository<Category, String> {
+public interface CategoryRepository extends CrudRepository<Category, Long>, PagingAndSortingRepository<Category, Long> {
 
-  List<Category> findByIdContaining(@Param("text") String text);
+  Category findByName(@Param("name") String name);
+
+  List<Category> findByNameContaining(@Param("text") String text);
+
+  List<Category> findByNameIgnoreCase(@Param("name") String name);
+
+  List<Category> findByDescriptionContaining(@Param("keyword") String keyword);
+
+  List<Category> findByDescriptionIsNotNull();
+
+
+  List<Category> findByIdGreaterThan(@Param("id") Long id);
+  List<Category> findByIdLessThan(@Param("id") Long id);
+
+
+  long countByNameContaining(@Param("text") String text);
 }
