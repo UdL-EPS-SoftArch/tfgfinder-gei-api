@@ -13,6 +13,11 @@ import java.util.Collection;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Professor extends Director {
+
+    private String department;
+    private String center;
+    private String office;
+
     @Override
     @ElementCollection
     public Collection<GrantedAuthority> getAuthorities(){

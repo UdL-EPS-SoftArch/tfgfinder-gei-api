@@ -14,7 +14,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @NotBlank
     private String text;
@@ -24,6 +24,7 @@ public class Message {
 
     @ManyToOne
     private User from;
+
+    @ManyToOne
+    private Chat chat;
 }
-
-

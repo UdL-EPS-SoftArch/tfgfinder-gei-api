@@ -4,3 +4,7 @@ spring:
   h2:
     console:
       enabled: false
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
