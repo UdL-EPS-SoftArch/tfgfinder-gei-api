@@ -34,5 +34,5 @@ TFG Finder backend developed by the GEI team. A Spring Boot project including Sp
 
 ## Entities Model
 
-![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5Sqn3i8m3030dLV00rBlJ6Ne1X9InGD2x3IM4YUo7V5zOBhnLlEeFbizNLXIdKXJwxcu3xi2QFmi1tkPxscagOkJ-99wWnVUm_RSmzwptpGLy7na5YGD1t68Wq4f6nIAQD0Y2spYx4psw4Xr6Vzp9S6VNm00?v1)
+![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5Sqn3i8m3030dLV00rBlJ6Ne1X9InGD2x3IM4YUo7V5zOBhnLlEeFbizNLXIdKXJwxcu3xi2QFmi1tkPxscagOkJ-99wWnVUm_RSmzwptpGLy7na5YGD1t68Wq4f6nIAQD0Y2spYx4psw4Xr6Vzp9S6VNm00?v2)
 

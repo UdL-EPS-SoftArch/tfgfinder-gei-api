@@ -24,5 +24,5 @@ public class Agree {
     private User who;
 
     @ManyToOne
-    private User what;
+    private Proposal what;
 }
