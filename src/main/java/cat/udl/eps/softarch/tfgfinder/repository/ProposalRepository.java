@@ -25,4 +25,8 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
 
   List<Proposal> findByDirector(Professor Director);
   List<Proposal> findByCodirector(Director Codirector);
+
+  void save(Proposal proposal);
+
+  List<Proposal> findAll();
 }
