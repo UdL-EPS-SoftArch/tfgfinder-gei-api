@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 	classes = {TFGFinderApplication.class},
 	loader = SpringBootContextLoader.class
 )
+@Component
 @DirtiesContext
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
