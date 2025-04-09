@@ -15,4 +15,3 @@ I want to login myself to access it
     And I'm not logged in
     When I login with username "anonymous" and password "password"
     Then The response code is 401
-  #And The error message is "wrong user or password"
