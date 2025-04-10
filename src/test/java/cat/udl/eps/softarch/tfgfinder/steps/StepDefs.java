@@ -32,7 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 	classes = {TFGFinderApplication.class},
 	loader = SpringBootContextLoader.class
 )
-@Component
+
 @DirtiesContext
 @RunWith(SpringRunner.class)
 @WebAppConfiguration

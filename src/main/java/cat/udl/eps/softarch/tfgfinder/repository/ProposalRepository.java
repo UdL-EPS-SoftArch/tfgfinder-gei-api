@@ -1,13 +1,14 @@
 package cat.udl.eps.softarch.tfgfinder.repository;
 
 import cat.udl.eps.softarch.tfgfinder.domain.*;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
 @RepositoryRestResource
-public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long> {
+public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long>, CrudRepository<Proposal, Long> {
 
   // Attributes
   List<Proposal> findByDescriptionContaining(String text);
