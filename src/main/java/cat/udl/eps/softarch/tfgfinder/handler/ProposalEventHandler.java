@@ -15,6 +15,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeLinkSave;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,47 +31,13 @@ public class ProposalEventHandler {
         this.proposalRepository = proposalRepository;
     }
 
-    @HandleBeforeCreate
-    public void handleUserPreCreate(Proposal proposal) {
-        logger.info("Before creating: {}", user.toString());
-    }
-
-    @HandleBeforeSave
-    public void handleUserPreSave(Proposal proposal) {
-        logger.info("Before updating: {}", user.toString());
-    }
-
-    @HandleBeforeDelete
-    public void handleUserPreDelete(Proposal proposal) {
-        logger.info("Before deleting: {}", user.toString());
-    }
-
-    @HandleBeforeLinkSave
-    public void handleUserPreLinkSave(Proposal proposal, Object o) {
-        logger.info("Before linking: {} to {}", user.toString(), o.toString());
-    }
 
     @HandleAfterCreate
     public void handleUserPostCreate(Proposal proposal) {
-        proposal.setOwner("mirar room project");
+        User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        proposal.setOwner(owner);
     }
 
-    @HandleAfterSave
-    public void handleUserPostSave(Proposal proposal) {
-        logger.info("After updating: {}", user.toString());
-        if (user.isPasswordReset()) {
-            user.encodePassword();
-        }
-        userRepository.save(user);
-    }
 
-    @HandleAfterDelete
-    public void handleUserPostDelete(User user) {
-        logger.info("After deleting: {}", user.toString());
-    }
 
-    @HandleAfterLinkSave
-    public void handleUserPostLinkSave(User user, Object o) {
-        logger.info("After linking: {} to {}", user.toString(), o.toString());
-    }
 }
