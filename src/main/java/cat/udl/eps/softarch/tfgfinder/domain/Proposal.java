@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -38,11 +39,13 @@ public class Proposal extends UriEntity<Long> {
 
     @ManyToOne(optional = false)
     private User owner;
-    @ManyToMany
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "proposal_category",  // Name of the join table
-            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
-            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK to Category
+            name = "proposal_category",
+            joinColumns = @JoinColumn(name = "proposal_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
 
