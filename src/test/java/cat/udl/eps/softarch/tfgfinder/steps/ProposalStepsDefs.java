@@ -95,7 +95,7 @@ public class ProposalStepsDefs {
     public void the_proposal_is_saved() throws Throwable {
         // Save the proposal
         stepDefs.result = stepDefs.mockMvc.perform(
-                        post("/proposal")
+                        post("/proposals")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(stepDefs.mapper.writeValueAsString(proposal))
                                 .characterEncoding(StandardCharsets.UTF_8)
