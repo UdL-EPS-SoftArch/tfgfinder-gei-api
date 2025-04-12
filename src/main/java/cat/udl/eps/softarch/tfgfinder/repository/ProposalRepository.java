@@ -6,12 +6,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
-import java.util.Optional;
 
 @RepositoryRestResource
 public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long>, CrudRepository<Proposal, Long> {
 
   // Attributes
+  List<Proposal> findByTitle(String title);
   List<Proposal> findByDescriptionContaining(String text);
   Proposal findProposalById(Long id);  // Fixed parameter type
   Proposal findByChat(Chat chat);
@@ -23,9 +23,7 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
   List<Proposal> findByKeywords(String text);
   List<Proposal> findByCategories(Category category); // Fixed: categories is a Set<Category>
   List<Proposal> findByTitleContaining(String text);
-  Optional<Proposal> findByTitle(String title);
   List<Proposal> findByStudent(Student student);
-
   List<Proposal> findByDirector(Professor Director);
   List<Proposal> findByCodirector(Director Codirector);
 }
