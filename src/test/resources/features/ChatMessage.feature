@@ -11,3 +11,4 @@ Feature: Create a chat and send a message
     And I create a new chat
     When I try to send an empty message to the user in the chat
     Then the message should not be saved
+

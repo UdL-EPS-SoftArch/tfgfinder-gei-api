@@ -11,6 +11,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.transaction.Transactional;
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,6 +36,7 @@ public class ChatMessageStepDefs {
     private Chat chat;
 
     private Exception exception;
+
 
     @Given("a user exists with email {string} and password {string}")
     public void aUserExists(String email, String password) {
@@ -99,5 +101,21 @@ public class ChatMessageStepDefs {
         assertTrue(exception instanceof IllegalArgumentException);
         List<Message> messages = messageRepository.findByChat(chat);
         assertTrue(messages.isEmpty());
+    }
+
+    // test: Send multiple messages to the user in the chat
+    @Then("the messages should be saved correctly with the texts [{string}, {string}, {string}]")
+    public void the_messages_should_be_saved_correctly_with_the_texts(String text1, String text2, String text3) {
+        List<Message> messages = messageRepository.findByChat(chat);
+
+        assertEquals(3, messages.size());
+
+        assertEquals(text1, messages.get(0).getText());
+        assertEquals(text2, messages.get(1).getText());
+        assertEquals(text3, messages.get(2).getText());
+
+        for (Message message : messages) {
+            assertEquals(user.getEmail(), message.getFrom().getEmail());
+        }
     }
 }
