@@ -13,29 +13,39 @@ import io.cucumber.java.en.When;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest
 @Transactional
 public class ChatMessageStepDefs {
+    @Autowired
+    private StepDefs stepDefs;
+
+    @Autowired
+    private MessageRepository messageRepository;
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private ChatRepository chatRepository;
 
-    @Autowired
-    private MessageRepository messageRepository;
-
-    private User user;
+    private Message message;
     private Chat chat;
+    private User user;
 
     private Exception exception;
-
 
     @Given("a user exists with email {string} and password {string}")
     public void aUserExists(String email, String password) {
@@ -43,6 +53,7 @@ public class ChatMessageStepDefs {
         user.setEmail(email);
         user.setPassword(password);
         user.setId(email);
+        user.encodePassword();
         user.encodePassword();
         userRepository.save(user);
     }
@@ -55,13 +66,21 @@ public class ChatMessageStepDefs {
 
     // Test: Create a chat and send a message to a user
     @When("I send the message {string} to the user in the chat")
-    public void iSendTheMessage(String text) {
+    public void iSendTheMessage(String text) throws Exception {
         Message sentMessage = new Message();
         sentMessage.setText(text);
         sentMessage.setWhen(ZonedDateTime.now());
         sentMessage.setFrom(user);
         sentMessage.setChat(chat);
-        messageRepository.save(sentMessage);
+
+        stepDefs.result = stepDefs.mockMvc.perform(
+                        post("/messages")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(sentMessage))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
     }
 
     @Then("the message should be saved correctly with the text {string}")
