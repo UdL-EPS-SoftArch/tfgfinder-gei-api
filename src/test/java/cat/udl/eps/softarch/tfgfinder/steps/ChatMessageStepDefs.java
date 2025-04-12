@@ -11,7 +11,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.transaction.Transactional;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -103,7 +102,7 @@ public class ChatMessageStepDefs {
         assertTrue(messages.isEmpty());
     }
 
-    // test: Send multiple messages to the user in the chat
+    // Test: Send multiple messages to the user in the chat
     @Then("the messages should be saved correctly with the texts [{string}, {string}, {string}]")
     public void the_messages_should_be_saved_correctly_with_the_texts(String text1, String text2, String text3) {
         List<Message> messages = messageRepository.findByChat(chat);
@@ -117,5 +116,13 @@ public class ChatMessageStepDefs {
         for (Message message : messages) {
             assertEquals(user.getEmail(), message.getFrom().getEmail());
         }
+    }
+
+    // Test: The message should have a timestamp that is not null
+    @Then("the message should have a timestamp that is not null")
+    public void theMessageShouldHaveATimestampThatIsNotNull() {
+        List<Message> messages = messageRepository.findByChat(chat);
+        assertEquals(1, messages.size());
+        assertNotNull(messages.get(0).getWhen());
     }
 }

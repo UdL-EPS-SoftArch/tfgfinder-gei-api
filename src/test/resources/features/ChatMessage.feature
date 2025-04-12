@@ -12,3 +12,8 @@ Feature: Create a chat and send a message
     When I try to send an empty message to the user in the chat
     Then the message should not be saved
 
+  Scenario: Send a message and verify its timestamp
+    Given a user exists with email "user@example.com" and password "securePassword"
+    And I create a new chat
+    When I send the message "Hello, user!" to the user in the chat
+    Then the message should have a timestamp that is not null
