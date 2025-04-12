@@ -2,13 +2,14 @@ package cat.udl.eps.softarch.tfgfinder.repository;
 
 import cat.udl.eps.softarch.tfgfinder.domain.*;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
 @RepositoryRestResource
-public interface ProposalRepository extends CrudRepository<Proposal, Long> {
-
+public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long>, CrudRepository<Proposal, Long> {
+  
   // Attributes
   Proposal findByTitle(String title);
   List<Proposal> findByDescriptionContaining(String text);
@@ -23,7 +24,6 @@ public interface ProposalRepository extends CrudRepository<Proposal, Long> {
   List<Proposal> findByCategories(Category category); // Fixed: categories is a Set<Category>
   List<Proposal> findByTitleContaining(String text);
   List<Proposal> findByStudent(Student student);
-
   List<Proposal> findByDirector(Professor Director);
   List<Proposal> findByCodirector(Director Codirector);
 
