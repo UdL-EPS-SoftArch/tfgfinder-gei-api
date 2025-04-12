@@ -15,7 +15,6 @@ import io.cucumber.java.en.When;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.hamcrest.Matchers.is;
@@ -35,14 +34,14 @@ public class InterestStepDefs {
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
 
-    public InterestStepDefs(StepDefs stepDefs, ProposalRepository proposalRepository, 
+    public InterestStepDefs(StepDefs stepDefs, ProposalRepository proposalRepository,
                            InterestRepository interestRepository, UserRepository userRepository) {
         this.stepDefs = stepDefs;
         this.proposalRepository = proposalRepository;
         this.interestRepository = interestRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
-        
+
         // Configure ObjectMapper
         this.objectMapper = new ObjectMapper();
         this.objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -88,9 +87,9 @@ public class InterestStepDefs {
 
     @When("I create an interest for the proposal with title {string}")
     public void iCreateAnInterestForTheProposalWithTitle(String title) throws Exception {
-        Proposal proposal = proposalRepository.findByTitle(title).orElse(null);
+        Proposal proposal = proposalRepository.findByTitle(title).stream().findFirst().orElse(null);
         String username = AuthenticationStepDefs.currentUsername;
-        
+
         if (proposal != null) {
             String jsonBody = String.format(
                 "{" +
@@ -103,7 +102,7 @@ public class InterestStepDefs {
                 username,
                 proposal.getId()
             );
-            
+
             stepDefs.result = stepDefs.mockMvc.perform(
                     post("/interests")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -176,4 +175,4 @@ public class InterestStepDefs {
                         .with(AuthenticationStepDefs.authenticate()))
                 .andDo(MockMvcResultHandlers.print());
     }
-} 
+}
