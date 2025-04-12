@@ -9,9 +9,9 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ProposalRepository extends PagingAndSortingRepository<Proposal, Long>, CrudRepository<Proposal, Long> {
-  
+
   // Attributes
-  Proposal findByTitle(String title);
+  List<Proposal> findByTitle(String title);
   List<Proposal> findByDescriptionContaining(String text);
   Proposal findProposalById(Long id);  // Fixed parameter type
   Proposal findByChat(Chat chat);
@@ -26,6 +26,4 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
   List<Proposal> findByStudent(Student student);
   List<Proposal> findByDirector(Professor Director);
   List<Proposal> findByCodirector(Director Codirector);
-
-
 }
