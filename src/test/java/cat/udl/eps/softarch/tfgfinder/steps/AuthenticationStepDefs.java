@@ -22,14 +22,14 @@ public class AuthenticationStepDefs {
     static RequestPostProcessor authenticate() {
         return currentUsername!=null ? httpBasic(currentUsername, currentPassword) : anonymous();
     }
-//
-//    @Given("^I login as \"([^\"]*)\" with password \"([^\"]*)\"$")
-//    public void iLoginAsWithPassword(String username, String password) {
-//        AuthenticationStepDefs.currentUsername = username;
-//        AuthenticationStepDefs.currentPassword = password;
-//    }
 
-    @Given("^I'm not logged in$")
+    @Given("I login as {string} with password {string}")
+    public void iLoginAsWithPassword(String username, String password) {
+        AuthenticationStepDefs.currentUsername = username;
+        AuthenticationStepDefs.currentPassword = password;
+    }
+
+    @Given("I'm not logged in")
     public void iMNotLoggedIn() {
         currentUsername = currentPassword = null;
     }

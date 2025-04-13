@@ -1,6 +1,6 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
-
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +23,10 @@ public class Message {
     private ZonedDateTime when;
 
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private User from;
 
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Chat chat;
 }
