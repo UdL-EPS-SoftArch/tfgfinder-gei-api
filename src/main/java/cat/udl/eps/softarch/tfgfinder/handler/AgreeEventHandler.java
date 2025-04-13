@@ -7,11 +7,13 @@ import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.ZonedDateTime;
 
+@Component
 @RepositoryEventHandler
 public class AgreeEventHandler {
     final Logger logger = LoggerFactory.getLogger(Agree.class);
