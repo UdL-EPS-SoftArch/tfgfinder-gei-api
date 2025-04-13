@@ -8,13 +8,24 @@ import cat.udl.eps.softarch.tfgfinder.repository.ProposalRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.UserRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.Assert.*;
+import org.springframework.http.MediaType;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 public class CreateAgreeStepDefs {
+
+    @Autowired
+    private StepDefs stepDefs;
 
     @Autowired
     private UserRepository userRepository;
@@ -67,7 +78,6 @@ public class CreateAgreeStepDefs {
         assertNotNull("The proposal with title \"" + title + "\" could not be found or created", proposal);
     }
 
-
     @And("^I am logged in as user \"([^\"]*)\"$")
     public void i_am_logged_in_as_user(String username) {
         User loggedInUser = userRepository.findById(username).orElse(null);
@@ -76,7 +86,7 @@ public class CreateAgreeStepDefs {
     }
 
     @When("^I select the proposal with title \"([^\"]*)\" to create an agree$")
-    public void i_select_the_proposal_with_title_to_create_an_agree(String proposalTitle) {
+    public void i_select_the_proposal_with_title_to_create_an_agree(String proposalTitle) throws Exception {
         List<Proposal> proposals = proposalRepository.findByTitleContaining(proposalTitle);
         assertFalse("No proposal with title \"" + proposalTitle + "\" exists", proposals.isEmpty());
         Proposal selectedProposal = proposals.stream()
@@ -85,12 +95,15 @@ public class CreateAgreeStepDefs {
                 .orElse(null);
         assertNotNull("The proposal with title \"" + proposalTitle + "\" does not exist", selectedProposal);
 
-        newAgree = new Agree();
-        newAgree.setWho(this.user);
-        newAgree.setWhat(selectedProposal);
-        // Assuming your Agree entity has a status field
-        newAgree.setStatus("PENDING_INTENT");
-        agreeRepository.save(newAgree);
+        Map<String, Object> newAgree = new HashMap<>();
+        newAgree.put("who", "/users/" + user.getId());
+        newAgree.put("what", "/proposals/" + selectedProposal.getId());
+
+        stepDefs.mockMvc.perform(post("/agrees")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(stepDefs.mapper.writeValueAsString(newAgree))
+                        .with(user("student").roles("USER")))
+                .andDo(print());
     }
 
     @Then("A new agree is created between the user {string} and the proposal  with title {string}")
@@ -98,16 +111,13 @@ public class CreateAgreeStepDefs {
         User expectedUser = userRepository.findById(username).orElse(null);
         assertNotNull("Expected user not found: " + username, expectedUser);
 
-        List<Proposal> proposals = proposalRepository.findByTitleContaining(proposalTitle);
-        assertFalse("No proposals found with title containing: " + proposalTitle, proposals.isEmpty());
-
-        Proposal expectedProposal = proposals.stream()
+        Proposal expectedProposal = proposalRepository.findByTitleContaining(proposalTitle).stream()
                 .filter(p -> p.getTitle().equals(proposalTitle))
                 .findFirst()
                 .orElse(null);
-        assertNotNull("Exact proposal with title not found: " + proposalTitle, expectedProposal);
+        assertNotNull("Expected proposal not found: " + proposalTitle, expectedProposal);
 
-
+        // Buscar por usuario y propuesta
         List<Agree> agreesByUser = agreeRepository.findByWho(expectedUser);
         Agree foundAgree = agreesByUser.stream()
                 .filter(a -> {
@@ -117,19 +127,21 @@ public class CreateAgreeStepDefs {
                 .findFirst()
                 .orElse(null);
 
+        // DEBUG opcional
+        System.out.println("Agrees encontrados para el usuario: " + agreesByUser.size());
+
         assertNotNull("No agree was created between user and proposal", foundAgree);
         assertEquals(expectedUser.getId(), foundAgree.getWho().getId());
         assertEquals(expectedProposal.getId(), foundAgree.getWhat().getId());
     }
 
-
-
-
     @And("^The agree status is \"([^\"]*)\"$")
     public void the_agree_status_is(String status) {
-        assertNotNull("The new agree has not been initialized", newAgree);
-        // Assuming your Agree entity has a getStatus() method
-        assertEquals("The agree status is not the expected one", status, newAgree.getStatus());
+        List<Agree> agrees = agreeRepository.findByWho(user);
+        Agree foundAgree = agrees.stream().findFirst().orElse(null);
+
+        assertNotNull("No agree found to check status", foundAgree);
+        assertEquals("The agree status is not the expected one", status, foundAgree.getStatus());
     }
 }
 

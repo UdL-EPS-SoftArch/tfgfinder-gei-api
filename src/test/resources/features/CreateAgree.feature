@@ -9,4 +9,4 @@ Feature: Create Agreement
     And I am logged in as user "student"
     When I select the proposal with title "title" to create an agree
     Then A new agree is created between the user "student" and the proposal  with title "title"
-    And The agree status is "PENDING_INTENT"
+    And The agree status is "CREATED"
