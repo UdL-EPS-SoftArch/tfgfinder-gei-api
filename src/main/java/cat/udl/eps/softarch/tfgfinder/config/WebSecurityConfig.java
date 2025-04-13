@@ -28,8 +28,17 @@ public class WebSecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.GET, "/identity").authenticated()
+                .requestMatchers(HttpMethod.POST,"/proposals/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/users").anonymous()
                 .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
+                
+                
+                .requestMatchers(HttpMethod.GET, "/interests").authenticated()
+                .requestMatchers(HttpMethod.GET, "/interests/*").authenticated()
+                .requestMatchers(HttpMethod.POST, "/interests").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/interests/*").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/interests/*").authenticated()
+                
                 .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/*/*").authenticated()
                 .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()

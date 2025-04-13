@@ -5,11 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 import java.time.ZonedDateTime;
 
 @Entity
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Interest extends UriEntity<Long> {
@@ -28,5 +26,10 @@ public class Interest extends UriEntity<Long> {
     private User who;
 
     @ManyToOne
-   private Proposal what;
+    private Proposal what;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

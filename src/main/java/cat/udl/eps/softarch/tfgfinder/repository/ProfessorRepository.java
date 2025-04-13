@@ -10,12 +10,8 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ProfessorRepository extends CrudRepository<Professor, String>, PagingAndSortingRepository<Professor, String> {
-
-    List<Professor> findByDepartment(@Param("department") String department);
-
-    List<Professor> findByCenter(@Param("center") String center);
-
-    List<Professor> findByOffice(@Param("office") String office);
-
+    List<Professor> findByDepartment(@Param("Department") String department);
+    List<Professor> findByCenter(@Param("Center") String center);
+    List<Professor> findByOffice(@Param("Office") String office);
     List<Professor> findByDepartmentAndCenter(@Param("department") String department, @Param("center") String center);
 }

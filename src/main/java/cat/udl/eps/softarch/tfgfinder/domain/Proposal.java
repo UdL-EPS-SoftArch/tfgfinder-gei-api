@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.tfgfinder.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -37,25 +38,27 @@ public class Proposal extends UriEntity<Long> {
     private String keywords;
 
     @ManyToOne(optional = false)
+    @JsonIdentityReference(alwaysAsId = true)
     private User owner;
+
     @ManyToMany
-    @JoinTable(
-            name = "proposal_category",  // Name of the join table
-            joinColumns = @JoinColumn(name = "proposal_id"),  // FK to Proposal
-            inverseJoinColumns = @JoinColumn(name = "category_id")  // FK to Category
-    )
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Category> categories = new HashSet<>();
 
     @OneToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Chat chat;
 
     @ManyToOne(optional = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private Student student;
 
     @ManyToOne(optional = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private Director codirector;
 
     @ManyToOne(optional = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private Professor director;
 
 
