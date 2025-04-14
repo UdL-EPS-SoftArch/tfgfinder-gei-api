@@ -65,14 +65,6 @@ public class CategoryStepDefs {
         assertNull(found);
     }
 
-    @Given("a category named {string} with description {string}")
-    public void a_category_named_with_description(String name, String description) {
-        Category category = new Category();
-        category.setName(name);
-        category.setDescription(description);
-        categoryRepository.save(category);
-    }
-
     @When("the admin updates the description to {string}")
     public void the_admin_updates_the_description(String newDescription) {
         if (createdCategory != null) {
