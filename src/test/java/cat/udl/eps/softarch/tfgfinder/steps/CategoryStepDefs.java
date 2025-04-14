@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
 
 @SpringBootTest
-public class CategoryStepDef {
+public class CategoryStepDefs {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -23,6 +23,14 @@ public class CategoryStepDef {
         Category category = new Category();
         category.setName(name);
         category.setDescription("Default description");
+        categoryRepository.save(category);
+    }
+
+    @Given("a category named {string} with description {string}")
+    public void a_category_named_with_description(String name, String description) {
+        Category category = new Category();
+        category.setName(name);
+        category.setDescription(description);
         categoryRepository.save(category);
     }
 
@@ -95,5 +103,6 @@ public class CategoryStepDef {
     @Then("an error should occur indicating the name must be unique")
     public void an_error_should_occur_due_to_duplicate() {
         assertNotNull(exception);
+        assertTrue(exception.getMessage().toLowerCase().contains("unique"));
     }
 }

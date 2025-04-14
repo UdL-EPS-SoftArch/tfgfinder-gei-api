@@ -1,7 +1,12 @@
 Feature: Category management by Admin
+  In order to manage categories
+  As an admin
+  I want to create, delete and edit categories
 
   Background:
-    Given an admin is logged in
+    Given an admin is logged in 
+    And a category named "Data Science" exists
+    And a proposal with the category "Data Science" exists
 
   Scenario: Admin creates a new category
     When the admin creates a category with name "Machine Learning" and description "Projects about ML"
