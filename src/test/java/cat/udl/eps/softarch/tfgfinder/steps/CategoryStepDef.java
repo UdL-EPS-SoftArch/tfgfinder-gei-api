@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
 
 @SpringBootTest
-public class CategoryStepDefs {
+public class CategoryStepDef {
 
     @Autowired
     private CategoryRepository categoryRepository;
