@@ -1,4 +1,4 @@
-allowed-origins: "https://tfgfinder-gei.fly.dev,https://deploy-preview-*--tfgfinder-gei.fly.dev"
+allowed-origins: "https://tfgfinder-gei.netlify.app,https://deploy-preview-*--tfgfinder-gei.netlify.app"
 
 logging:
     level:
