@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
-@Profile("flyio")
+@Profile("postgres")
 public class DatabaseConfig {
     @Bean
     public DataSource dataSource() throws URISyntaxException {

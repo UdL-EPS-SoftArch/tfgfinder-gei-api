@@ -18,8 +18,7 @@ public class Agree {
         ACCEPTED,
         REJECTED,
         DELETED,
-        COMPLETED,
-        PENDING_INTENT
+        COMPLETED
     }
     private InternalStatus currentStatus = InternalStatus.CREATED;
 
