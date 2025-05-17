@@ -66,8 +66,10 @@ public class ModifyAgreeStepDefs {
 
     @When("I want to modify the agreement with title {string} with the new status {string}")
     public void iWantToModifyTheAgreementWithIdWithTheNewStatus(String title, String newStatus) throws Exception {
-        Proposal proposal = proposalRepository.findByTitleContaining(title).get(0);
-        Agree agree = agreeRepository.findByWhat(proposal).get(0);
+        Proposal proposal = proposalRepository.findByTitle(title).stream().findFirst().orElseThrow(() ->
+                new IllegalArgumentException("Proposal with title " + title + " not found"));
+        Agree agree = agreeRepository.findByWhat(proposal).stream().findFirst().orElseThrow(() ->
+                new IllegalArgumentException("Agree with title " + title + "or" + newStatus + " not found"));
         agree.setStatus(newStatus);
 
         result = stepDefs.mockMvc.perform(patch("/agrees/" + agree.getId())

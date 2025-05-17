@@ -91,9 +91,9 @@ public class RejectOfferStepDefs{
     public void iDeleteTheOfferWithTitleByTheUser(String proposalTitle, String username) throws Exception {
         User user = userRepository.findById(username).orElseThrow();
         Proposal proposal = proposalRepository.findByTitle(proposalTitle).stream().findFirst().orElseThrow(() ->
-                new IllegalArgumentException("Review with title " + proposalTitle + " not found"));
+                new IllegalArgumentException("Proposal with title " + proposalTitle + " not found"));
         Agree agree = (Agree) agreeRepository.findByWhoAndWhat(user, proposal).stream().findFirst().orElseThrow(() ->
-                new IllegalArgumentException("Review with title " + proposalTitle + "or" + username + " not found"));
+                new IllegalArgumentException("Agree with title " + proposalTitle + "or" + username + " not found"));
 
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete("/agrees/{id}", agree.getId())
