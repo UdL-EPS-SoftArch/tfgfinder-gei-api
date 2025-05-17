@@ -36,7 +36,6 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/categories").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/categories/*").hasRole("ADMIN")
 
-                
                 .requestMatchers(HttpMethod.GET, "/interests").authenticated()
                 .requestMatchers(HttpMethod.GET, "/interests/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/interests").authenticated()

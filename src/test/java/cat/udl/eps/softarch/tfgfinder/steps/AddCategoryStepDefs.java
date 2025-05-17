@@ -1,16 +1,20 @@
 package cat.udl.eps.softarch.tfgfinder.steps;
 
 import cat.udl.eps.softarch.tfgfinder.domain.Category;
-import cat.udl.eps.softarch.tfgfinder.domain.Admin;
-import cat.udl.eps.softarch.tfgfinder.repository.AdminRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.CategoryRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,19 +27,27 @@ public class AddCategoryStepDefs {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private AdminRepository adminRepository;
+    private String currentUsername;
+    private String currentPassword;
+    private String[] currentRoles; //Maybe the user has more than one role, is a good practice make this array in this case.
 
-    @Given("there is a registered admin with username {string} and password {string} and email {string}")
-    public void there_is_a_registered_admin_with_username_and_password_and_email(String username, String password, String email) {
-        if (!adminRepository.existsById(username)) {
-            Admin admin = new Admin();
-            admin.setId(username);
-            admin.setEmail(email);
-            admin.setPassword(password);
-            admin.encodePassword();
-            adminRepository.save(admin);
+    @Given("I login as {string} with password {string} with role {string} in order to add a category")
+    public void iLoginAsWithPasswordWithRole(String username, String password, String role) {
+        this.currentUsername = username;
+        this.currentPassword = password;
+        this.currentRoles = new String[]{role};
+    }
+
+    private RequestPostProcessor getAuthenticationRequestPostProcessor() {
+        if (currentUsername == null || currentPassword == null || currentRoles == null) {
+            throw new IllegalStateException("username or password or role/s can't be null");
         }
+        List<SimpleGrantedAuthority> authorities = Arrays.stream(currentRoles)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return SecurityMockMvcRequestPostProcessors.user(currentUsername)
+                .password(currentPassword)
+                .authorities(authorities);
     }
 
     @When("I add a new category with name {string} and description {string}")
@@ -45,11 +57,11 @@ public class AddCategoryStepDefs {
         newCategory.setDescription(description);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(getAuthenticationRequestPostProcessor()))
                 .andDo(print());
     }
 
@@ -59,11 +71,12 @@ public class AddCategoryStepDefs {
         newCategory.setName(name);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(getAuthenticationRequestPostProcessor())
+                )
                 .andDo(print());
     }
 
@@ -82,11 +95,11 @@ public class AddCategoryStepDefs {
         newCategory.setDescription(description);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(getAuthenticationRequestPostProcessor()))
                 .andDo(print());
     }
 }
