@@ -40,31 +40,6 @@ public class RejectOfferStepDefs{
     @Autowired
     private AgreeRepository agreeRepository;
 
-    private String currentUsername;
-    private String currentPassword;
-    private String[] currentRoles;
-
-
-    @Given("I login as {string} with password {string} with role {string}")
-    public void iLoginAsWithPasswordWithRole(String username, String password, String role) {
-        this.currentUsername = username;
-        this.currentPassword = password;
-        this.currentRoles = new String[]{role};
-    }
-
-    private RequestPostProcessor getAuthenticationRequestPostProcessor() {
-        if (currentUsername == null || currentPassword == null || currentRoles == null) {
-            throw new IllegalStateException("username or password or role/s can't be null");
-        }
-        List<SimpleGrantedAuthority> authorities = Arrays.stream(currentRoles)
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-        return SecurityMockMvcRequestPostProcessors.user(currentUsername)
-                .password(currentPassword)
-                .authorities(authorities);
-    }
-
-
     @Given("^An agreement exists between user \"([^\"]*)\" and proposal with title \"([^\"]*)\"$")
     public void anAgreementExists(String username, String proposalTitle) {
         User user = userRepository.findById(username).orElseThrow();
@@ -94,22 +69,21 @@ public class RejectOfferStepDefs{
                 new IllegalArgumentException("Proposal with title " + proposalTitle + " not found"));
         Agree agree = (Agree) agreeRepository.findByWhoAndWhat(user, proposal).stream().findFirst().orElseThrow(() ->
                 new IllegalArgumentException("Agree with title " + proposalTitle + "or" + username + " not found"));
-
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete("/agrees/{id}", agree.getId())
-                        .with(getAuthenticationRequestPostProcessor())
-        ).andDo(print());
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete("/proposals/{id}", proposal.getId())
-                        .with(getAuthenticationRequestPostProcessor())
-        ).andDo(print());
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
     }
 
     @When ("^I delete the offer with id \"([^\"]*)\"$")
     public void iDeleteTheOfferWithId(Long id) throws Exception {
         stepDefs.result = stepDefs.mockMvc.perform(
-                        delete("/proposals/{id}", id)
-                                .with(getAuthenticationRequestPostProcessor()))
+                delete("/proposals/{id}", id)
+                        .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
