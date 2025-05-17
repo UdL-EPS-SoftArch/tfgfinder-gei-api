@@ -8,11 +8,10 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors; // Importar
-import org.springframework.test.web.servlet.request.RequestPostProcessor; // Importar
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class AddCategoryStepDefs {
     private String currentPassword;
     private String[] currentRoles; //Maybe the user has more than one role, is a good practice make this array in this case.
 
-    @Given("I login as {string} with password {string} with role {string}")
+    @Given("I login as {string} with password {string} with role {string} in order to add a category")
     public void iLoginAsWithPasswordWithRole(String username, String password, String role) {
         this.currentUsername = username;
         this.currentPassword = password;
