@@ -79,5 +79,20 @@ public class DBInitialization {
                 userRepository.save(user);
             }
         }
+        if (proposalRepository.findByTitle("ZTNA") != null) {
+            Proposal proposal2 = new Proposal();
+            proposal.setTitle("ZTNA");
+            proposal.setDescription("ZTNA");
+            proposal.setTiming("june -september");
+            proposal.setSpeciality("Cybersecurity");
+            proposal.setKind("Master Thesis");
+            proposal.setKeywords("ZTNA, security, networking");
+            proposal.setOwner(userRepository.findById("demo").get());
+            proposalRepository.save(proposal2);
+        }
     }
 }
+
+
+
+
