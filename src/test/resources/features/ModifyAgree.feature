@@ -4,7 +4,7 @@ Feature: Modify Agree
   So that I can change the agree status
 
   Scenario: Modify agree status
-    Given There is an agreement with title "Test" and status "ACCEPTED"
+    Given There is an agreement with title "Agreement Test" and status "ACCEPTED"
     And I login with username "student" and password "password"
-    When I want to modify the agreement with title "Test" with the new status "REJECTED"
+    When I want to modify the agreement with title "Agreement Test" with the new status "REJECTED"
     Then The state has been successfully modified
