@@ -8,9 +8,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource
 public interface AgreeRepository extends CrudRepository<Agree, Long >, PagingAndSortingRepository<Agree, Long > {
     List<Agree> findByWho(User who);
     List<Agree> findByWhat(Proposal what);
+
+    Optional<Object> findByWhoAndWhat(User user, Proposal proposal);
 }

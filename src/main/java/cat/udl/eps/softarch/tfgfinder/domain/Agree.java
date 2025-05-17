@@ -17,7 +17,6 @@ public class Agree {
         CREATED,
         ACCEPTED,
         REJECTED,
-        DELETED,
         COMPLETED
     }
     private InternalStatus currentStatus = InternalStatus.CREATED;

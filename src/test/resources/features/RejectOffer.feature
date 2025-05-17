@@ -1,14 +1,27 @@
-Feature: Reject Offer
+Feature: Delete Offer
   As an admin
   I want to reject an offer (proposal agreement)
   So that the proposal is not approved for that user
 
-  Scenario: Successfully reject an agreement between the "admin" and the proposal titled "title"
-    Given A user with username "admin" exists in the system
-    And A proposal with title "title" exists in the system
-    And A user with username "student" exists in the system
-    And An agreement exists between user "student" and proposal with title "title"
-    And I am logged in as user "admin"
-    When I reject the agreement between user "student" and proposal with title "title"
-    Then The agree status is "REJECTED"
-    Then The state has been successfully modified
+  Background:
+    Given A user with username "student" exists in the system
+    Given A proposal with title "IA" exists in the system
+
+  Scenario: Attempt to delete an offer without authentication
+    Given I login as "student" with password "password" with role "ROLE_USER"
+    When I try to delete the offer "IA" without authentication
+    Then The response code is 401
+
+  Scenario: Attempt to delete a non-existing offer
+    Given I login as "admin" with password "password" with role "ROLE_ADMIN"
+    When I delete the offer with id "9999"
+    Then The response code is 404
+
+
+  Scenario: Delete an existing offer
+    Given An agreement exists between user "student" and proposal with title "IA"
+    And I login as "admin" with password "password" with role "ROLE_ADMIN"
+    When I delete the offer with title "IA" by the user "student"
+    Then The response code is 204
+
+
