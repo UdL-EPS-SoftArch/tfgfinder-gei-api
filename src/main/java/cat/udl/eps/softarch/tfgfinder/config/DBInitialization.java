@@ -83,7 +83,7 @@ public class DBInitialization {
             Proposal proposal2 = new Proposal();
             proposal.setTitle("ZTNA");
             proposal.setDescription("ZTNA");
-            proposal.setTiming("Q1 2025");
+            proposal.setTiming("june -september");
             proposal.setSpeciality("Cybersecurity");
             proposal.setKind("Master Thesis");
             proposal.setKeywords("ZTNA, security, networking");
