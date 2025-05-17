@@ -18,6 +18,7 @@ public class Category extends UriEntity<Long> {
     private Long id;
 
     @NotBlank
+    @Column(unique = true)
     private String name;
 
     @Lob

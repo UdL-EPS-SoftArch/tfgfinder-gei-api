@@ -31,7 +31,9 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/proposals/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/users").anonymous()
                 .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
-                
+
+                //With the next line, only the users with ROLE_ADMIN can add a new category
+                .requestMatchers(HttpMethod.POST, "/categories").hasRole("ADMIN")
                 
                 .requestMatchers(HttpMethod.GET, "/interests").authenticated()
                 .requestMatchers(HttpMethod.GET, "/interests/*").authenticated()
