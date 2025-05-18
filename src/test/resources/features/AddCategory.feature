@@ -1,7 +1,7 @@
 Feature: Add Category
 
-Background:
-  Given there is a registered admin with username "admin" and password "password" and email "admin@mail.app"
+  Background:
+    Given there is a registered admin with username "admin" and password "password" and email "admin@mail.app"
 
   Scenario: Add a valid category as Admin
     Given I login as "admin" with password "password"

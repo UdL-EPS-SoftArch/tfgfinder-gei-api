@@ -45,11 +45,11 @@ public class AddCategoryStepDefs {
         newCategory.setDescription(description);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 
@@ -59,11 +59,11 @@ public class AddCategoryStepDefs {
         newCategory.setName(name);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 
@@ -82,11 +82,11 @@ public class AddCategoryStepDefs {
         newCategory.setDescription(description);
 
         stepDefs.result = stepDefs.mockMvc.perform(
-                post("/categories")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(stepDefs.mapper.writeValueAsString(newCategory))
-                    .characterEncoding(StandardCharsets.UTF_8)
-                    .with(AuthenticationStepDefs.authenticate()))
+                        post("/categories")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(newCategory))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 }

@@ -34,7 +34,8 @@ public class WebSecurityConfig {
 
                 //With the next line, only the users with ROLE_ADMIN can add a new category
                 .requestMatchers(HttpMethod.POST, "/categories").hasRole("ADMIN")
-                
+                .requestMatchers(HttpMethod.PATCH, "/categories/*").hasRole("ADMIN")
+
                 .requestMatchers(HttpMethod.GET, "/interests").authenticated()
                 .requestMatchers(HttpMethod.GET, "/interests/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/interests").authenticated()
