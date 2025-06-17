@@ -7,6 +7,7 @@ import cat.udl.eps.softarch.tfgfinder.repository.CategoryRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.InterestRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.ProposalRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.UserRepository;
+import cat.udl.eps.softarch.tfgfinder.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import jakarta.annotation.PostConstruct;
