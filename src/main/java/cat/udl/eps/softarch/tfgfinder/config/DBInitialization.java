@@ -3,6 +3,7 @@ import cat.udl.eps.softarch.tfgfinder.domain.Category;
 import cat.udl.eps.softarch.tfgfinder.domain.Interest;
 import cat.udl.eps.softarch.tfgfinder.domain.Proposal;
 import cat.udl.eps.softarch.tfgfinder.domain.User;
+import cat.udl.eps.softarch.tfgfinder.domain.Admin;
 import cat.udl.eps.softarch.tfgfinder.repository.CategoryRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.InterestRepository;
 import cat.udl.eps.softarch.tfgfinder.repository.ProposalRepository;
