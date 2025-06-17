@@ -25,12 +25,15 @@ public class DBInitialization {
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
 
-    public DBInitialization(UserRepository userRepository, CategoryRepository categoryRepository, ProposalRepository proposalRepository, InterestRepository interestRepository) {
+    public DBInitialization(UserRepository userRepository, CategoryRepository categoryRepository, ProposalRepository proposalRepository, 
+                            InterestRepository interestRepository, AdminRepository adminRepository) {
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.proposalRepository = proposalRepository;
         this.interestRepository = interestRepository;
+        this.adminRepository = adminRepository;
     }
 
     @PostConstruct
@@ -43,6 +46,15 @@ public class DBInitialization {
             user.setPassword(defaultPassword);
             user.encodePassword();
             userRepository.save(user);
+        }
+        // Default admin
+        if (!adminRepository.existsById("admin")) {
+            Admin admin = new Admin();
+            admin.setEmail("admin@sample.app");
+            admin.setId("admin");
+            admin.setPassword(defaultPassword);
+            admin.encodePassword();
+            adminRepository.save(admin);
         }
 
         Category category = new Category();
