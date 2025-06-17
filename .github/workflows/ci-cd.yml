@@ -17,9 +17,6 @@ jobs:
           java-version: 17
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        env:
-          CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}
-          CUCUMBER_PUBLISH_ENABLED: true
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to fly.io
         if: success() && github.ref == 'refs/heads/main'
